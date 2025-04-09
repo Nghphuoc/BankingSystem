@@ -13,7 +13,7 @@ import java.util.List;
 public class BankService implements ServiceBank {
 
     List<Transaction> transactions = new ArrayList<>();
-    private static final String FILE_NAME = "D:/data/transactions.json";
+    private static final String FILE_NAME = "data/transactions.json";
 
     @Override
     public Transaction addTransaction(Transaction transaction) throws ValidateIdException {
@@ -26,12 +26,12 @@ public class BankService implements ServiceBank {
                     throw new ValidateIdException("Error Duplication ID: "+transaction.getId());
                 }
             }
-            transactions.add(transaction);
+            transactions.add(transaction); // If we didn't find a duplicate, add the transaction
             System.out.println("Transaction added successfully.");
         }catch (Exception e){
             System.out.println("Error: "+e.getMessage());
         }
-        // If we didn't find a duplicate, add the transaction
+
         return transaction;
     }
 
@@ -43,6 +43,7 @@ public class BankService implements ServiceBank {
             if(transactionInfo.getId().equals(id)){
                 listRemove.add(transactionInfo);
                 check = true; // đã tìm thấy đối tượng cần xóa
+                break;
             }
         }
         if(listRemove.isEmpty()){
