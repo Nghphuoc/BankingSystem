@@ -1,3 +1,3 @@
-package org.example.Entity;
+package org.example.entity;
 
 public enum Type {Transaction}

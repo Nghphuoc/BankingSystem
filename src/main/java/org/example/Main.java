@@ -1,8 +1,9 @@
 package org.example;
-import org.example.Entity.Transaction;
-import org.example.Exception.ValidateAmountException;
-import org.example.Exception.ValidateIdException;
-import org.example.ServiceSystem.ServiceSystemImpl.BankService;
+import java.util.List;
+import org.example.entity.Transaction;
+import org.example.exception.ValidateAmountException;
+import org.example.exception.ValidateIdException;
+import org.example.serviceSystem.serviceSystemImpl.BankService;
 import java.util.Scanner;
 
 public class Main {
@@ -29,7 +30,6 @@ public class Main {
 
             int choice = scanner.nextInt();
             scanner.nextLine();  // consume newline character
-
 
             switch (choice) {
 
@@ -81,9 +81,9 @@ public class Main {
                 case 4: // Search Transaction
                     System.out.print("Enter transaction name to search: ");
                     String searchName = scanner.nextLine();
-                    Transaction searchedTransaction = bank.searchTransaction(searchName);
+                    List<Transaction> searchedTransaction = bank.searchTransaction(searchName);
                     if (searchedTransaction != null) {
-                        System.out.println("Transaction found: " + searchedTransaction);
+                        searchedTransaction.forEach(System.out::println);
                     } else {
                         System.out.println("Transaction not found.");
                     }
@@ -107,10 +107,9 @@ public class Main {
                     break;
             }
         }
-
         // Close the scanner
         scanner.close();
-        }
+    }
 
     public static double parseAmount(String input) throws ValidateAmountException {
         try {

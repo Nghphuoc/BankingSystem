@@ -1,9 +1,9 @@
-package org.example.ServiceSystem.ServiceSystemImpl;
+package org.example.serviceSystem.serviceSystemImpl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.Entity.Transaction;
-import org.example.Exception.ValidateIdException;
-import org.example.ServiceSystem.ServiceBank;
+import org.example.entity.Transaction;
+import org.example.exception.ValidateIdException;
+import org.example.serviceSystem.ServiceBank;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,17 +35,21 @@ public class BankService implements ServiceBank {
         return transaction;
     }
 
-
     @Override
     public boolean removeTransaction(Long id) {
+        List<Transaction> listRemove = new ArrayList<>(); // lưu vào một list mới sử dụng remove all để xóa các phần tử trùng lặp
+        boolean check = false;
         for(Transaction transactionInfo : transactions) {
             if(transactionInfo.getId().equals(id)){
-                transactions.remove(id);
-            }else{
-                System.out.println("can not find id same to: "+id);
+                listRemove.add(transactionInfo);
+                check = true; // đã tìm thấy đối tượng cần xóa
             }
         }
-        return false;
+        if(listRemove.isEmpty()){
+            System.out.println("can not find id same to: "+id);
+        }
+        transactions.removeAll(listRemove);
+        return check;
     }
 
     @Override
@@ -58,16 +62,25 @@ public class BankService implements ServiceBank {
     }
 
     @Override
-    public Transaction searchTransaction(String name) {
-        for(Transaction transaction : transactions){
-            if(transaction.getTransactionName().equals(name)){
-                System.out.println(transaction.toString());
-                return transaction;
-            }else {
-                System.out.println("Cannot find Transaction");
+    public List<Transaction> searchTransaction(String name) {
+
+        List<Transaction> transactionsFind = new ArrayList<>();
+
+        if (name == null || name.isEmpty()) {
+            System.out.println("Transaction name cannot be null or empty.");
+            return null;
+        }
+
+        for (Transaction transaction : transactions) {
+            // Kiểm tra nếu tên giao dịch khớp với tên tìm kiếm
+            if (transaction.getTransactionName().equals(name)) {
+                transactionsFind.add(transaction);
             }
         }
-        return null;
+
+        // Nếu không tìm thấy giao dịch nào
+        System.out.println("Cannot find transaction with name: " + name);
+        return transactionsFind;
     }
 
     @Override
@@ -91,7 +104,6 @@ public class BankService implements ServiceBank {
     public void loadToFile() {
         try {
             File file = new File(FILE_NAME);
-
             // Kiểm tra nếu file tồn tại trước khi đọc
             if (!file.exists()) {
                 System.out.println("File not found: " + FILE_NAME);

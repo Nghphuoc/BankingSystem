@@ -1,6 +1,7 @@
-package org.example.ServiceSystem;
-import org.example.Entity.Transaction;
-import org.example.Exception.ValidateIdException;
+package org.example.serviceSystem;
+import java.util.List;
+import org.example.entity.Transaction;
+import org.example.exception.ValidateIdException;
 
 public interface ServiceBank {
     Transaction addTransaction (Transaction transaction) throws ValidateIdException;
@@ -9,7 +10,7 @@ public interface ServiceBank {
 
     void showAllTransaction();
 
-    Transaction searchTransaction(String name);
+    List<Transaction> searchTransaction(String name);
 
     void saveToFile();
 

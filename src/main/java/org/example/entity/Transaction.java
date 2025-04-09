@@ -1,4 +1,4 @@
-package org.example.Entity;
+package org.example.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -6,15 +6,11 @@ public class Transaction {
 
     private Long id;
 
-
     private String transactionName;
-
 
     private double amount;
 
-
     private String type;
-
 
     private String note;
 
@@ -26,9 +22,8 @@ public class Transaction {
         this.note = note;
     }
 
-    public Transaction(){
+    public Transaction(){}
 
-    }
     @JsonProperty("id")
     public Long getId() {
         return id;
@@ -45,6 +40,7 @@ public class Transaction {
     public void setTransactionName(String transactionName) {
         this.transactionName = transactionName;
     }
+
     @JsonProperty("amount")
     public double getAmount() {
         return amount;
@@ -53,16 +49,17 @@ public class Transaction {
     public void setAmount(double amount) {
         this.amount = amount;
     }
+
     @JsonProperty("type")
     public String getTypeTransaction() {
         return type;
     }
 
-
     public void setType(String type) {
         this.type = type;
     }
-@JsonProperty("note")
+
+    @JsonProperty("note")
     public String getNote() {
         return note;
     }
