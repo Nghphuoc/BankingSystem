@@ -87,11 +87,6 @@ public class BankService implements ServiceBank {
     @Override
     public void saveToFile() {
         try {
-            // Create the directory if it doesn't exist
-            File directory = new File("src/main/resources");
-            if (!directory.exists()) {
-                directory.mkdirs();
-            }
             // Save transactions to file
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.writeValue(new File(FILE_NAME), transactions);
